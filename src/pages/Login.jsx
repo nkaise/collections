@@ -5,16 +5,21 @@ import '../css/forms.css';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { login } from '../actions/user';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors, isValid } } = useForm();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         dispatch(login(data.email, data.password));
-      };
+        if (data.email === email && data.password === password) {
+          navigate("/mypage");
+        }
+    };
 
     return ( 
     <div className="form">
