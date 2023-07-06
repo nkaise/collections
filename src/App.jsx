@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { auth } from "./actions/user";
 import PersonalPage from "./pages/PersonalPage";
+import UsersTable from "./pages/UsersTable";
 
 const App = () => {
     const isAuth = useSelector(state => state.user.isAuth);
@@ -32,6 +33,7 @@ const App = () => {
             : 
             <Routes>
                 <Route path="mypage" element={<PersonalPage role={role} />}></Route>
+                <Route path="users" element={<UsersTable />}></Route>
             </Routes>
             }
     </> 

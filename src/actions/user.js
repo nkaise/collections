@@ -18,7 +18,7 @@ export const login = (email, password) => {
         try {
             const response = await axios.post(`http://localhost:3001/api/auth/login`, {
                 email,
-                password
+                password,
             })
             dispatch(setUser(response.data.user));
             localStorage.setItem('token', response.data.token);
@@ -33,12 +33,59 @@ export const auth = () => {
     return async dispatch => {
         try {
             const response = await axios.get(`http://localhost:3001/api/auth/auth`, {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}});
-            // dispatch(setUser(response.data.user));
             dispatch(setUser({ user: response.data.user, role: response.data.user.role }));
             localStorage.setItem('token', response.data.token);
         } catch (e) {
-            // alert(e.response.data.message);
             localStorage.removeItem('token'); 
         }
     }
 }
+
+export const users = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/api/data/users`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  export const deleteUser = async (userId) => {
+    try {
+      const response = await axios.delete(`http://localhost:3001/api/data/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  export const updateUser = async (userId, status) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/data/users/${userId}/`,
+        {status},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  
+  
+  

@@ -17,7 +17,9 @@ const Login = () => {
     const onSubmit = (data) => {
         dispatch(login(data.email, data.password));
         if (data.email === email && data.password === password) {
-          navigate("/mypage");
+          if (!isAlertActive) {
+            navigate("/mypage");
+          }
         }
     };
 
