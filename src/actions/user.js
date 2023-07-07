@@ -86,6 +86,24 @@ export const users = async () => {
     }
   };
 
+  export const adminUser = async (userId, role) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3001/api/data/users/${userId}/`,
+        {role},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   
   
   

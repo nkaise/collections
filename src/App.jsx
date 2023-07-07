@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { auth } from "./actions/user";
 import PersonalPage from "./pages/PersonalPage";
 import UsersTable from "./pages/UsersTable";
+import ItemsPage from "./pages/ItemsPage";
 
 const App = () => {
     const isAuth = useSelector(state => state.user.isAuth);
@@ -34,6 +35,7 @@ const App = () => {
             <Routes>
                 <Route path="mypage" element={<PersonalPage role={role} />}></Route>
                 <Route path="users" element={<UsersTable />}></Route>
+                <Route path="items" element={<ItemsPage />}></Route>
             </Routes>
             }
     </> 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { deleteUser, updateUser, users } from "../actions/user";
+import { adminUser, deleteUser, updateUser, users } from "../actions/user";
 import { Table } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -8,6 +8,7 @@ import '../css/usersTable.css';
 
 const UsersTable = () => {
     const [usersData, setUsersData] = useState([]);
+    const [selectAll, setSelectAll] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
   
     const fetchUsersData = async () => {
@@ -30,6 +31,16 @@ const UsersTable = () => {
         setCheckedItems([...checkedItems, userId]);
       }
     };
+
+    const handleSelectAll = () => {
+        setSelectAll(!selectAll);
+        if (!selectAll) {
+          const allUserIds = usersData.map((user) => user._id);
+          setCheckedItems(allUserIds);
+        } else {
+          setCheckedItems([]);
+        }
+      };
   
     const handleDeleteUser = async () => {
       try {
@@ -61,6 +72,25 @@ const UsersTable = () => {
           console.error(e);
         }
       };
+
+      const handleAdminUser = async (buttonType) => {
+        try {
+          for (const userId of checkedItems) {
+            const currentUser = usersData.find((user) => user._id === userId);
+            if (currentUser) {
+              if (currentUser.role === "admin" && buttonType != "addToAdmin") {
+                await adminUser(userId, "user");
+              } else if (currentUser.role === "user" && buttonType != "removeFromAdmin") {
+                await adminUser(userId, "admin");
+              }
+            }
+          }
+          fetchUsersData();
+          setCheckedItems([]);
+        } catch (e) {
+          console.error(e);
+        }
+      };
       
   
     return (
@@ -77,7 +107,7 @@ const UsersTable = () => {
         <Table striped bordered hover variant='secondary' className='user-table'>
           <thead>
             <tr>
-              <th><Form.Check /></th>
+              <th><Form.Check onChange={handleSelectAll} checked={selectAll}/></th>
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
@@ -93,7 +123,7 @@ const UsersTable = () => {
                   />
                 </td>
                 <td>{item.email}</td>
-                <td>{item.role}</td>
+                <td className={item.role === "admin" ? "text-danger" : ""} >{item.role}</td>
                 <td>{item.status}</td>
               </tr>
             ))}

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm();
+    const [isAlertActive, setIsAlertActive] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
