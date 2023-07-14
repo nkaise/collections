@@ -17,7 +17,7 @@ const HeaderNav = () => {
                 <NavLink href="/">Home</NavLink>
                 {!isAuth && <NavLink href="login">Login</NavLink>}
                 {!isAuth && <NavLink href="register">Registration</NavLink>}
-                {isAuth && <NavLink href="mypage">My page</NavLink>}
+                {isAuth && <NavLink href="collections">Collections</NavLink>}
                 {isAuth && <Button variant="info" onClick={() => dispatch(logout()) && navigate("/")}>Logout</Button>}
             </Nav>
         </Navbar>

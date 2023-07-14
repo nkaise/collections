@@ -104,6 +104,76 @@ export const users = async () => {
     }
   };
 
+//   export const createCollection = async (name, description, theme) => {
+//     try {
+//         const response = await axios.post(`http://localhost:3001/api/auth/createcollection`, {
+//             name,
+//             description,
+//             theme
+//         })
+//         alert(response.data.message)
+//     } catch (e) {
+//         alert(e.response.data.message)
+//     }
+// };
+
+export const getThemes = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3001/api/collection/themes`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    return response.data['themes'];
+  } catch (e) {
+    console.error(e);
+    return null
+  }
+};
+
+export const getCollections = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3001/api/collection/getcollections`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return null
+  }
+};
+
+export const createCollection = async (name, description, themeId, userId, additionalFields) => {
+  try {
+    const response = await axios.post(`http://localhost:3001/api/collection/createcollection`, {
+      name,
+      description,
+      themeId,
+      userId,
+      additionalFields
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+    );
+    if (response && response.data) {
+      alert(response.data.message);
+    } else {
+      alert('Invalid response');
+    }
+  } catch (e) {
+    if (e.response && e.response.data) {
+      alert(e.response.data.message);
+    } else {
+      alert('Request failed');
+    }
+  }
+};
+
   
   
   

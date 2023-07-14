@@ -33,7 +33,7 @@ const App = () => {
             </Routes>
             : 
             <Routes>
-                <Route path="mypage" element={<PersonalPage role={role} />}></Route>
+                <Route path="collections" element={<PersonalPage role={role} />}></Route>
                 <Route path="users" element={<UsersTable />}></Route>
                 <Route path="items" element={<ItemsPage />}></Route>
             </Routes>

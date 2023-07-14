@@ -19,7 +19,7 @@ const Login = () => {
         dispatch(login(data.email, data.password));
         if (data.email === email && data.password === password) {
           if (!isAlertActive) {
-            navigate("/mypage");
+            navigate("/collections");
           }
         }
     };

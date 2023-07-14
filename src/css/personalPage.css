@@ -1,9 +1,13 @@
 .personal-page-main {
     width: 80%;
     margin: 0 auto;
-    background-color: bisque;
 }
 
-.personal-page-title {
-    text-align: right;
+.personal-page-collections {
+    text-align: center;
+}
+
+.personal-page__dropdown {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
