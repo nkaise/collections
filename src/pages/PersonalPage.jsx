@@ -192,7 +192,6 @@ const PersonalPage = () => {
                 </div> 
                 ))}
 
-{/* {console.log(additionalFields)} */}
 
             
 

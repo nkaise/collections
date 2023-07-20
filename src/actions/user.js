@@ -148,6 +148,20 @@ export const getCollections = async () => {
   }
 };
 
+export const getItems = async () => {
+  try {
+    const response = await axios.get(`http://localhost:3001/api/collection/items`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    return response.data;
+  } catch (e) {
+    console.error(e);
+    return null
+  }
+};
+
 export const createCollection = async (name, description, theme, userId, additionalFieldsArray) => {
   try {
     const response = await axios.post(`http://localhost:3001/api/collection/createcollection`, {
@@ -156,6 +170,33 @@ export const createCollection = async (name, description, theme, userId, additio
       theme: theme,
       userId,
       additionalFieldsArray
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }
+    );
+    if (response && response.data) {
+      alert(response.data.message);
+    } else {
+      alert('Invalid response');
+    }
+  } catch (e) {
+    if (e.response && e.response.data) {
+      alert(e.response.data.message);
+    } else {
+      alert('Request failed', e);
+    }
+  }
+};
+
+export const createItem = async (name, tags, collectionId) => {
+  try {
+    const response = await axios.post(`http://localhost:3001/api/collection/createitem`, {
+      name,
+      tags,
+      collectionId
     },
     {
       headers: {
