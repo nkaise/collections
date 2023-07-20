@@ -124,7 +124,10 @@ export const getThemes = async () => {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
     });
-    return response.data['themes'];
+    const themes = response.data['themes'];
+    const ids = themes.map((theme) => theme._id);
+    const names = themes.map((theme) => theme.name);
+    return { ids, names };
   } catch (e) {
     console.error(e);
     return null
@@ -145,14 +148,14 @@ export const getCollections = async () => {
   }
 };
 
-export const createCollection = async (name, description, themeId, userId, additionalFields) => {
+export const createCollection = async (name, description, theme, userId, additionalFieldsArray) => {
   try {
     const response = await axios.post(`http://localhost:3001/api/collection/createcollection`, {
       name,
       description,
-      themeId,
+      theme: theme,
       userId,
-      additionalFields
+      additionalFieldsArray
     },
     {
       headers: {
@@ -169,7 +172,7 @@ export const createCollection = async (name, description, themeId, userId, addit
     if (e.response && e.response.data) {
       alert(e.response.data.message);
     } else {
-      alert('Request failed');
+      alert('Request failed', e);
     }
   }
 };

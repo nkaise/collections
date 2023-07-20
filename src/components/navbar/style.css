@@ -1,0 +1,9 @@
+.navbar {
+    background-color: #272727;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.navbar__link {
+    color: white;
+}

@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/usersTable.css';
+import { useLocalStorage } from '../utils/useLocalStorage';
+import { useSelector, useDispatch } from 'react-redux';
 
 const UsersTable = () => {
     const [usersData, setUsersData] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
-  
+
     const fetchUsersData = async () => {
       try {
         const data = await users();
@@ -91,17 +93,18 @@ const UsersTable = () => {
           console.error(e);
         }
       };
-      
+
+
   
     return (
       <>
         <h2 className='user-title'>User table</h2>
         <ButtonGroup aria-label="Basic example" className='user-buttons'>
-          <Button variant="danger" onClick={() => handleStatusUser("block")}>Block</Button>
-          <Button variant="success" onClick={() => handleStatusUser("unblock")}>Unblock</Button>
-          <Button variant="dark" onClick={handleDeleteUser}>Delete</Button>
-          <Button variant="primary" onClick={() => handleAdminUser("addToAdmin")}>Make an admin</Button>
-          <Button variant="warning" onClick={() => handleAdminUser("removeFromAdmin")}>Delete from admin</Button>
+          <Button variant="outline-success" onClick={() => handleStatusUser("block")}>Block</Button>
+          <Button variant="outline-success" onClick={() => handleStatusUser("unblock")}>Unblock</Button>
+          <Button variant="outline-success" onClick={handleDeleteUser}>Delete</Button>
+          <Button variant="outline-success" onClick={() => handleAdminUser("addToAdmin")}>Make an admin</Button>
+          <Button variant="outline-success" onClick={() => handleAdminUser("removeFromAdmin")}>Delete from admin</Button>
         </ButtonGroup>
   
         <Table striped bordered hover variant='secondary' className='user-table'>

@@ -3,6 +3,8 @@ import Search from "../../pages/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/userReducer";
 import { useNavigate } from "react-router-dom";
+import BtnDarkMode from "../btnDarkMode/BtnDarkMode";
+import './style.css';
 
 const HeaderNav = () => {
     const isAuth = useSelector(state => state.user.isAuth);
@@ -11,15 +13,16 @@ const HeaderNav = () => {
 
     return ( 
     <>
-        <Navbar style={{justifyContent: "center"}}>
-            <Search />
+        <Navbar style={{justifyContent: "center"}} className="navbar">
+            {/* <Search /> */}
             <Nav>
-                <NavLink href="/">Home</NavLink>
-                {!isAuth && <NavLink href="login">Login</NavLink>}
-                {!isAuth && <NavLink href="register">Registration</NavLink>}
-                {isAuth && <NavLink href="collections">Collections</NavLink>}
+                <NavLink href="/"><span className="navbar__link">Home</span></NavLink>
+                {!isAuth && <NavLink href="login"><span className="navbar__link">Login</span></NavLink>}
+                {!isAuth && <NavLink href="register"><span className="navbar__link">Registration</span></NavLink>}
+                {isAuth && <NavLink href="/collections"><span className="navbar__link">Collections</span></NavLink>}
                 {isAuth && <Button variant="info" onClick={() => dispatch(logout()) && navigate("/")}>Logout</Button>}
             </Nav>
+            <BtnDarkMode />
         </Navbar>
     </> );
 }
