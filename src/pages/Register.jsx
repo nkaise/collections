@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import '../css/forms.css';
 import { useState } from 'react';
 import { registration } from '../actions/user';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,13 +12,19 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const onSubmit = (data) => {
-        if (isValid) {
-            registration(data.email, data.password);
-        } else {
-          alert('The form contains errors');
+    const onSubmit = async (data) => {
+      if (isValid) {
+        try {
+          await registration(data.email, data.password);
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
+        } catch (error) {
+          toast.error('Failed to register. Please try again.');
         }
+      }
     };
 
     return ( 
