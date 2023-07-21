@@ -15,3 +15,15 @@
 .personal-page__modal {
     color: black;
 }
+
+.personal-page-main__li:hover {
+    cursor: pointer;
+    color: #6495ED;
+    transition-timing-function: ease-in;
+    transition: 0.4s;
+}
+
+.personal-page-main__li {
+    transition-timing-function: ease-in;
+    transition: 0.4s;
+}

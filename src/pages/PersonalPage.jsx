@@ -50,7 +50,6 @@ const PersonalPage = () => {
       const fetchCollections = async () => {
         try {
           const response = await getCollections();
-          console.log(response)
           setCollections(response['collections']); 
         } catch (error) {
           console.log(error);
@@ -114,18 +113,23 @@ const PersonalPage = () => {
     <div className='personal-page-main'>
         <h5 className='personal-page-title'>Hello, {role}</h5>
         {(role === 'admin') && <Link to="/users">Go to users table</Link>}
-        <h2 className='personal-page-collections'>Collections</h2>
+        <h2 className='personal-page-collections'>Your collections</h2>
         <ButtonGroup aria-label="Basic example" className='user-buttons'>
           <Button variant="outline-primary" onClick={() => setShowModal(true)}>Create</Button>
           <Button variant="outline-primary">Edit</Button>
           <Button variant="outline-danger">Delete</Button>
         </ButtonGroup>
-      <ListGroup as="ol" numbered>
-        {collections.map(collection => (
-          <ListGroup.Item 
-            onClick={() => handleCollectionClick(collection.name)}>
-            <Link>{collection.name}</Link>
-          </ListGroup.Item>
+            <ListGroup as="ol" numbered>
+        {collections.map((collection) => (
+          (role === 'admin' || collection.userId === userId) ? (
+            <ListGroup.Item
+              className='personal-page-main__li'
+              onClick={() => handleCollectionClick(collection.name)}
+              key={collection._id}
+            >
+              {collection.name}
+            </ListGroup.Item>
+          ) : null
         ))}
       </ListGroup>
 

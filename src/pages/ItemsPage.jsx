@@ -99,7 +99,7 @@ const ItemsPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {items.map(item => (
+                    {items.map(item => ((collectionId === item.collectionId) &&
                         <tr key={item._id}>
                             <td>{item.name}</td>
                             <td>{item.tags.map(tag => (tag))}</td>
