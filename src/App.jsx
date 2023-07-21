@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -11,7 +11,6 @@ import PersonalPage from "./pages/PersonalPage";
 import UsersTable from "./pages/UsersTable";
 import ItemsPage from "./pages/ItemsPage";
 import './css/app.css'
-import BtnDarkMode from "./components/btnDarkMode/BtnDarkMode";
 
 const App = () => {
     const isAuth = useSelector(state => state.user.isAuth);
@@ -37,7 +36,6 @@ const App = () => {
             <Routes>
                 <Route path="/collections" element={<PersonalPage role={role} />}></Route>
                 <Route path="users" element={<UsersTable />}></Route>
-                {/* <Route path="items" element={<ItemsPage />}></Route> */}
                 <Route path="/collections/:collectionName" element={<ItemsPage />} />
             </Routes>
             }

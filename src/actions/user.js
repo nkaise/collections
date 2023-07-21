@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { setUser } from '../reducers/userReducer';
 
 export const registration = async (email, password) => {
@@ -7,7 +8,7 @@ export const registration = async (email, password) => {
             email,
             password
         })
-        alert(response.data.message)
+        toast.success(response.data.message);
     } catch (e) {
         alert(e.response.data.message)
     }

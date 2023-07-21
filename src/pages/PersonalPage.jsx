@@ -61,9 +61,6 @@ const PersonalPage = () => {
     const handleCreateCollection = async () => {
       try {
         const selectedTheme = { _id: selectedThemeId, name: theme };
-        // const additionalFieldsArray = Object.entries(additionalFields).map(([fieldName, fieldType]) => ({
-        //   [fieldName]: fieldType,
-        // }));
         const additionalFieldsArray = Object.entries(additionalFields).map(([fieldName, fieldType]) => ({
           [fieldName]: {
             type: fieldType,
@@ -81,7 +78,6 @@ const PersonalPage = () => {
       }
     };
     
-
     const handleTypeField = (e) => {
       const selectedType = e.currentTarget.dataset.type;
       setFieldType(selectedType);
@@ -119,21 +115,23 @@ const PersonalPage = () => {
           <Button variant="outline-primary">Edit</Button>
           <Button variant="outline-danger">Delete</Button>
         </ButtonGroup>
-            <ListGroup as="ol" numbered>
-        {collections.map((collection) => (
-          (role === 'admin' || collection.userId === userId) ? (
-            <ListGroup.Item
-              className='personal-page-main__li'
-              onClick={() => handleCollectionClick(collection.name)}
-              key={collection._id}
-            >
-              {collection.name}
-            </ListGroup.Item>
-          ) : null
-        ))}
-      </ListGroup>
+        <ListGroup as="ol" numbered>
+          {collections.map((collection) => (
+            (role === 'admin' || collection.userId === userId) ? (
+              <ListGroup.Item
+                className='personal-page-main__li'
+                onClick={() => handleCollectionClick(collection.name)}
+                key={collection._id} >
+                {collection.name}
+              </ListGroup.Item>
+            ) : null
+          ))}
+        </ListGroup>
 
-        <Modal show={showModal} onHide={() => setShowModal(false)} className='personal-page__modal'>
+        <Modal 
+          show={showModal} 
+          onHide={() => setShowModal(false)} 
+          className='personal-page__modal'>
           <Modal.Header closeButton>
             <Modal.Title>Create a collection</Modal.Title>
           </Modal.Header>
@@ -146,8 +144,8 @@ const PersonalPage = () => {
               <Form.Group controlId="formDescription">
                 <Form.Label>Description</Form.Label>
                 <Form.Control as="textarea" rows={3} value={description} onChange={(e) => setDescription(e.target.value)} />
-               </Form.Group>
-               <Form.Group controlId="formTheme">
+              </Form.Group>
+              <Form.Group controlId="formTheme">
                 <Form.Label>Theme</Form.Label>
                 <Form.Control as="select" onChange={(e) => handleTheme(e.target.value)}>
                 <option value="">Choose theme</option>
@@ -156,9 +154,8 @@ const PersonalPage = () => {
                       {theme}
                     </option>
                   ))}
-               </Form.Control>
-                </Form.Group>
-
+                </Form.Control>
+              </Form.Group>
               <Dropdown className='personal-page__dropdown'>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   Add additional fields
@@ -171,10 +168,7 @@ const PersonalPage = () => {
                   <Dropdown.Item data-type="date" onClick={handleTypeField}>Date</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-
-
-              {fieldUserName.map((fieldUserName, index) => ( 
-                
+              {fieldUserName.map((fieldUserName, index) => (
                 <div key={index}>
                   <InputGroup className="mb-3">
                     <InputGroup.Text id="inputGroup-sizing-default">
@@ -194,11 +188,7 @@ const PersonalPage = () => {
                     </Button>
                   </InputGroup>
                 </div> 
-                ))}
-
-
-            
-
+              ))}
             </Form>
           </Modal.Body>
           <Modal.Footer>
@@ -207,7 +197,7 @@ const PersonalPage = () => {
           </Modal.Footer>
         </Modal>
     </div>
-    );
+  );
 }
  
 export default PersonalPage;

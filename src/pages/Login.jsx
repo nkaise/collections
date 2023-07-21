@@ -37,7 +37,6 @@ const Login = () => {
             onChange={(e) => { setEmail(e.target.value) }} 
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control 
@@ -48,12 +47,12 @@ const Login = () => {
             /> 
             {errors.password && <p>Password contains at least 8 symbols</p>}
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Log in
           </Button>
         </Form>
-    </div> );
+    </div> 
+  );
 }
  
 export default Login;

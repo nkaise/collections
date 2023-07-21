@@ -14,7 +14,6 @@ const HeaderNav = () => {
     return ( 
     <>
         <Navbar style={{justifyContent: "center"}} className="navbar">
-            {/* <Search /> */}
             <Nav>
                 <NavLink href="/"><span className="navbar__link">Home</span></NavLink>
                 {!isAuth && <NavLink href="login"><span className="navbar__link">Login</span></NavLink>}

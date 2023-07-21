@@ -5,8 +5,6 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 import '../css/usersTable.css';
-import { useLocalStorage } from '../utils/useLocalStorage';
-import { useSelector, useDispatch } from 'react-redux';
 
 const UsersTable = () => {
     const [usersData, setUsersData] = useState([]);
@@ -42,7 +40,7 @@ const UsersTable = () => {
         } else {
           setCheckedItems([]);
         }
-      };
+    };
   
     const handleDeleteUser = async () => {
       try {
@@ -73,29 +71,27 @@ const UsersTable = () => {
         } catch (e) {
           console.error(e);
         }
-      };
+    };
 
-      const handleAdminUser = async (buttonType) => {
-        try {
-          for (const userId of checkedItems) {
-            const currentUser = usersData.find((user) => user._id === userId);
-            if (currentUser) {
-              if (currentUser.role === "admin" && buttonType != "addToAdmin") {
-                await adminUser(userId, "user");
-              } else if (currentUser.role === "user" && buttonType != "removeFromAdmin") {
-                await adminUser(userId, "admin");
-              }
+    const handleAdminUser = async (buttonType) => {
+      try {
+        for (const userId of checkedItems) {
+          const currentUser = usersData.find((user) => user._id === userId);
+          if (currentUser) {
+            if (currentUser.role === "admin" && buttonType != "addToAdmin") {
+              await adminUser(userId, "user");
+            } else if (currentUser.role === "user" && buttonType != "removeFromAdmin") {
+              await adminUser(userId, "admin");
             }
           }
-          fetchUsersData();
-          setCheckedItems([]);
-        } catch (e) {
-          console.error(e);
         }
-      };
+        fetchUsersData();
+        setCheckedItems([]);
+      } catch (e) {
+        console.error(e);
+      }
+    };
 
-
-  
     return (
       <>
         <h2 className='user-title'>User table</h2>
@@ -106,7 +102,6 @@ const UsersTable = () => {
           <Button variant="outline-success" onClick={() => handleAdminUser("addToAdmin")}>Make an admin</Button>
           <Button variant="outline-success" onClick={() => handleAdminUser("removeFromAdmin")}>Delete from admin</Button>
         </ButtonGroup>
-  
         <Table striped bordered hover variant='secondary' className='user-table'>
           <thead>
             <tr>
@@ -134,7 +129,7 @@ const UsersTable = () => {
         </Table>
       </>
     );
-  }
+}
   
-  export default UsersTable;
+export default UsersTable;
   

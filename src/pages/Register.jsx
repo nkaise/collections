@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import '../css/forms.css';
 import { useState } from 'react';
 import { registration } from '../actions/user';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm();
@@ -14,12 +16,13 @@ const Register = () => {
         if (isValid) {
             registration(data.email, data.password);
         } else {
-          alert('Форма содержит ошибки');
+          alert('The form contains errors');
         }
-      };
+    };
 
     return ( 
     <div className="form">
+        <ToastContainer />
         <h3>Registration</h3>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -31,7 +34,6 @@ const Register = () => {
             onChange={(e) => { setEmail(e.target.value) }} 
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control 
@@ -42,12 +44,12 @@ const Register = () => {
             /> 
             {errors.password && <p>Password contains at least 8 symbols</p>}
           </Form.Group>
-
           <Button variant="primary" type="submit">
             Sign up
           </Button>
         </Form>
-    </div> );
+    </div> 
+    );
 }
  
 export default Register;
