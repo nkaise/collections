@@ -7,6 +7,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
 import { Form } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 import '../css/items.css';
 
 const ItemsPage = () => {
@@ -21,6 +24,7 @@ const ItemsPage = () => {
     const [items, setItems] = useState([]);
     var collectionId;
     if (selectedItem) {collectionId = selectedItem._id};
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCollections = async () => {
@@ -47,6 +51,8 @@ const ItemsPage = () => {
       try {
           await createItem(name, tagsArr, collectionId);
           setShow(false);
+          const response = await getItems();
+          setItems(response['items']);
       } catch (e) {
           console.log(e)
       }
@@ -64,11 +70,15 @@ const ItemsPage = () => {
       fetchItems();
     }, []);
 
+    const handleGoBack = () => {navigate("/collections");}
+
     return ( 
         <div className='items-block'>
+            <ToastContainer />
+            <Button onClick={handleGoBack}>Go back</Button>
             {selectedItem && (
               <div>
-                <h2>{selectedItem.name}</h2>
+                <h2 className='items-block__title'>{selectedItem.name}</h2>
                 <Accordion defaultActiveKey="0" >
                   <Accordion.Item eventKey="0">
                     <Accordion.Header><b>Description</b></Accordion.Header>

@@ -9,6 +9,8 @@ import '../css/personalPage.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { createCollection, getThemes } from '../actions/user';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PersonalPage = () => {
     const dispatch = useDispatch();
@@ -73,6 +75,8 @@ const PersonalPage = () => {
         setDescription('');
         setTheme('');
         setAdditionalFields([]);
+        const response = await getCollections();
+        setCollections(response['collections']); 
       } catch (e) {
         console.log('Failed to create collection:', e)
       }
@@ -107,6 +111,7 @@ const PersonalPage = () => {
 
     return ( 
     <div className='personal-page-main'>
+        <ToastContainer />
         <h5 className='personal-page-title'>Hello, {role}</h5>
         {(role === 'admin') && <Link to="/users">Go to users table</Link>}
         <h2 className='personal-page-collections'>Your collections</h2>

@@ -5,3 +5,7 @@
 .items-modal {
     color: black;
 }
+
+.items-block__title {
+    text-align: center;
+}

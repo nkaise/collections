@@ -6,26 +6,28 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { login } from '../actions/user';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors, isValid } } = useForm();
-    const [isAlertActive, setIsAlertActive] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const onSubmit = (data) => {
-        dispatch(login(data.email, data.password));
-        if (data.email === email && data.password === password) {
-          if (!isAlertActive) {
-            navigate("/collections");
-          }
-        }
+    const onSubmit = async (data) => {
+      try {
+        await dispatch(login(data.email, data.password));
+        navigate("/collections");
+      } catch (error) {
+        toast.error("Invalid email or password");
+      }
     };
 
     return ( 
     <div className="form">
+        <ToastContainer />
         <h3>Login</h3>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="formBasicEmail">

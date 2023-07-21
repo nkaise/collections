@@ -40,7 +40,7 @@ const Home = () => {
       <h5>Here are a list of recently added items:</h5>
       <ListGroup as="ol">
         {lastFiveItems.map(item => (
-          <ListGroupItem>{item.name} from <span className="home__li-collection">{collections.map(id => id._id === item.collectionId ? (id.name) : null )}</span></ListGroupItem>
+          <ListGroupItem>"{item.name}" from <span className="home__li-collection">{collections.map(id => id._id === item.collectionId ? (id.name) : null )}</span></ListGroupItem>
         ))}
       </ListGroup>
     </div> );

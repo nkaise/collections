@@ -1,31 +1,31 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { setUser } from '../reducers/userReducer';
+const apiUrl = 'http://localhost:3001';
 
 export const registration = async (email, password) => {
     try {
-        const response = await axios.post(`http://localhost:3001/api/auth/register`, {
+        const response = await axios.post(`${apiUrl}/api/auth/register`, {
             email,
             password
         })
         toast.success(response.data.message);
     } catch (e) {
-        alert(e.response.data.message)
+        toast.error(e.response.data.message)
     }
 };
 
 export const login = (email, password) => {
     return async dispatch => {
         try {
-            const response = await axios.post(`http://localhost:3001/api/auth/login`, {
+            const response = await axios.post(`${apiUrl}/api/auth/login`, {
                 email,
                 password,
             })
             dispatch(setUser(response.data.user));
             localStorage.setItem('token', response.data.token);
-            console.log(response.data)
         } catch (e) {
-            alert(e.response.data.message)
+          toast.error(e.response.data.message)
         }
     }
 };
@@ -33,7 +33,7 @@ export const login = (email, password) => {
 export const auth = () => {
     return async dispatch => {
         try {
-            const response = await axios.get(`http://localhost:3001/api/auth/auth`, {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}});
+            const response = await axios.get(`${apiUrl}/api/auth/auth`, {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}});
             dispatch(setUser({ user: response.data.user, role: response.data.user.role }));
             localStorage.setItem('token', response.data.token);
         } catch (e) {
@@ -44,7 +44,7 @@ export const auth = () => {
 
 export const users = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/api/data/users`, {
+      const response = await axios.get(`${apiUrl}/api/data/users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -53,74 +53,58 @@ export const users = async () => {
     } catch (e) {
       console.error(e);
     }
-  };
+};
 
-  export const deleteUser = async (userId) => {
-    try {
-      const response = await axios.delete(`http://localhost:3001/api/data/users/${userId}`, {
+export const deleteUser = async (userId) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/api/data/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const updateUser = async (userId, status) => {
+  try {
+    const response = await axios.put(
+      `${apiUrl}/api/data/users/${userId}/`,
+      {status},
+      {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      });
-      console.log(response.data)
-      return response.data;
-    } catch (e) {
-      console.error(e);
-    }
-  };
+      }
+    );
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
-  export const updateUser = async (userId, status) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3001/api/data/users/${userId}/`,
-        {status},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
+export const adminUser = async (userId, role) => {
+  try {
+    const response = await axios.put(
+      `${apiUrl}/api/data/users/${userId}/`,
+      {role},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
         }
-      );
-      console.log(response.data);
-      return response.data;
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  export const adminUser = async (userId, role) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3001/api/data/users/${userId}/`,
-        {role},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        }
-      );
-      console.log(response.data);
-      return response.data;
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-//   export const createCollection = async (name, description, theme) => {
-//     try {
-//         const response = await axios.post(`http://localhost:3001/api/auth/createcollection`, {
-//             name,
-//             description,
-//             theme
-//         })
-//         alert(response.data.message)
-//     } catch (e) {
-//         alert(e.response.data.message)
-//     }
-// };
+      }
+    );
+    return response.data;
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export const getThemes = async () => {
   try {
-    const response = await axios.get(`http://localhost:3001/api/collection/themes`, {
+    const response = await axios.get(`${apiUrl}/api/collection/themes`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -137,7 +121,7 @@ export const getThemes = async () => {
 
 export const getCollections = async () => {
   try {
-    const response = await axios.get(`http://localhost:3001/api/collection/getcollections`, {
+    const response = await axios.get(`${apiUrl}/api/collection/getcollections`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -151,7 +135,7 @@ export const getCollections = async () => {
 
 export const getItems = async () => {
   try {
-    const response = await axios.get(`http://localhost:3001/api/collection/items`, {
+    const response = await axios.get(`${apiUrl}/api/collection/items`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -165,7 +149,7 @@ export const getItems = async () => {
 
 export const createCollection = async (name, description, theme, userId, additionalFieldsArray) => {
   try {
-    const response = await axios.post(`http://localhost:3001/api/collection/createcollection`, {
+    const response = await axios.post(`${apiUrl}/api/collection/createcollection`, {
       name,
       description,
       theme: theme,
@@ -179,22 +163,22 @@ export const createCollection = async (name, description, theme, userId, additio
     }
     );
     if (response && response.data) {
-      alert(response.data.message);
+      toast.success(response.data.message);
     } else {
-      alert('Invalid response');
+      toast.error('Invalid response');
     }
   } catch (e) {
     if (e.response && e.response.data) {
-      alert(e.response.data.message);
+      toast.success(e.response.data.message);
     } else {
-      alert('Request failed', e);
+      toast.error('Request failed', e);
     }
   }
 };
 
 export const createItem = async (name, tags, collectionId) => {
   try {
-    const response = await axios.post(`http://localhost:3001/api/collection/createitem`, {
+    const response = await axios.post(`${apiUrl}/api/collection/createitem`, {
       name,
       tags,
       collectionId
@@ -206,15 +190,15 @@ export const createItem = async (name, tags, collectionId) => {
     }
     );
     if (response && response.data) {
-      alert(response.data.message);
+      toast.success(response.data.message);
     } else {
-      alert('Invalid response');
+      toast.error('Invalid response');
     }
   } catch (e) {
     if (e.response && e.response.data) {
-      alert(e.response.data.message);
+      toast.success(e.response.data.message);
     } else {
-      alert('Request failed', e);
+      toast.error('Request failed', e);
     }
   }
 };
